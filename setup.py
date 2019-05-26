@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytorchcheckpoint",
-    version="0.0.2",
+    version="0.0.3",
     author="Omri Bar",
     author_email="baromri@gmail.com",
     description="Support PyTorch checkpoints",

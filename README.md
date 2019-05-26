@@ -16,8 +16,7 @@ In addition, it allows saving metrics and other values generated while training,
 ## Prerequisites
 Developed with **Python 3.7.3**, but should be compatible with previous Python version.
 ```
-torch==1.1.0
-torchvision==0.3.0
+pip install torch==1.1.0 torchvision==0.3.0
 ```
 
 ## Installation
@@ -36,6 +35,11 @@ checkpoint_handler.store_var(var_name='loss', iteration=1, value=0.9)
 checkpoint_handler.store_var(var_name='loss', iteration=2, value=0.8)
 ```
 
+#### Reading stored values
+```python
+loss = checkpoint_handler.get_var(var_name='loss', iteration=0)
+```
+
 #### Storing values and metrics per set: train/valid/test for each epoch/iteration. For example, the top1 value of the train and valid sets: 
 ```python
 checkpoint_handler.store_var_with_header(header='train', var_name='top1', iteration=0, value=80)
@@ -47,6 +51,11 @@ checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iterat
 checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=1, value=75)
 checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=2, value=80)
 checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=3, value=85)
+```
+
+#### Reading stored values per set: train/valid/test
+```python
+loss = checkpoint_handler.get_var_with_header(header='train', var_name='loss', iteration=0)
 ```
 
 #### Save checkpoint:

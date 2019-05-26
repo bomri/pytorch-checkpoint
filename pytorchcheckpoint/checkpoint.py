@@ -16,6 +16,17 @@ class CheckpointHandler:
         else:
             setattr(self, var_name, {iteration: value})
 
+    def get_var(self, var_name, iteration):
+        if hasattr(self, var_name):
+            cur = getattr(self, var_name)
+            value = cur.get(iteration, None)
+            if value is None:
+                return False
+            else:
+                return value
+        else:
+            return False
+
     def store_var_with_header(self, header, var_name, iteration, value):
         if hasattr(self, header):
             cur_header = getattr(self, header)
@@ -26,6 +37,20 @@ class CheckpointHandler:
             setattr(self, header, cur_header)
         else:
             setattr(self, header, {var_name: {iteration: value}})
+
+    def get_var_with_header(self, header, var_name, iteration):
+        if hasattr(self, header):
+            cur_header = getattr(self, header)
+            if var_name in cur_header:
+                value = cur_header[var_name].get(iteration, None)
+                if value is None:
+                    return False
+                else:
+                    return value
+            else:
+                return False
+        else:
+            return False
 
     def generate_checkpoint_path(self, path2save):
         now = datetime.datetime.now()
