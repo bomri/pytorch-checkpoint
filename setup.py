@@ -1,8 +1,4 @@
 import setuptools
-"""
-python3 setup.py sdist bdist_wheel
-twine upload dist/*
-"""
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
