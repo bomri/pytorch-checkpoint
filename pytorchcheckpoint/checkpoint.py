@@ -8,7 +8,20 @@ class CheckpointHandler:
     def __init__(self):
         self.prefix_name = 'checkpoint'
 
-    def store_var(self, var_name, iteration, value):
+    def store_var(self, var_name, value, exist_fail=False):
+        if exist_fail is True and hasattr(self, var_name):
+            raise Exception("var_name='{}' already exists".format(var_name))
+        else:
+            setattr(self, var_name, value)
+
+    def get_var(self, var_name):
+        if hasattr(self, var_name):
+            value = getattr(self, var_name)
+            return value
+        else:
+            return False
+
+    def store_running_var(self, var_name, iteration, value):
         if hasattr(self, var_name):
             cur = getattr(self, var_name)
             cur[iteration] = value
@@ -16,7 +29,7 @@ class CheckpointHandler:
         else:
             setattr(self, var_name, {iteration: value})
 
-    def get_var(self, var_name, iteration):
+    def get_running_var(self, var_name, iteration):
         if hasattr(self, var_name):
             cur = getattr(self, var_name)
             value = cur.get(iteration, None)
@@ -27,7 +40,7 @@ class CheckpointHandler:
         else:
             return False
 
-    def store_var_with_header(self, header, var_name, iteration, value):
+    def store_running_var_with_header(self, header, var_name, iteration, value):
         if hasattr(self, header):
             cur_header = getattr(self, header)
             if var_name in cur_header:
@@ -38,7 +51,7 @@ class CheckpointHandler:
         else:
             setattr(self, header, {var_name: {iteration: value}})
 
-    def get_var_with_header(self, header, var_name, iteration):
+    def get_running_var_with_header(self, header, var_name, iteration):
         if hasattr(self, header):
             cur_header = getattr(self, header)
             if var_name in cur_header:

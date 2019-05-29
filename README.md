@@ -28,41 +28,50 @@ from pytorchcheckpoint.checkpoint import CheckpointHandler
 checkpoint_handler = CheckpointHandler()
 ```
 
-#### Storing values and metrics for each epoch/iteration. For example, the loss value: 
+#### Storing a general value
 ```python
-checkpoint_handler.store_var(var_name='loss', iteration=0, value=1.0)
-checkpoint_handler.store_var(var_name='loss', iteration=1, value=0.9)
-checkpoint_handler.store_var(var_name='loss', iteration=2, value=0.8)
+checkpoint_handler.store_var(var_name='num_of_classes', value=1000)
+```
+#### Reading a general value
+```python
+num_of_classes = checkpoint_handler.get_var(var_name='num_of_classes')
 ```
 
-#### Reading stored values
+#### Storing values and metrics for each epoch/iteration. For example, the loss value: 
 ```python
-loss = checkpoint_handler.get_var(var_name='loss', iteration=0)
+checkpoint_handler.store_running_var(var_name='loss', iteration=0, value=1.0)
+checkpoint_handler.store_running_var(var_name='loss', iteration=1, value=0.9)
+checkpoint_handler.store_running_var(var_name='loss', iteration=2, value=0.8)
+```
+
+#### Reading stored values for epoch/iteration
+```python
+loss = checkpoint_handler.get_running_var(var_name='loss', iteration=0)
 ```
 
 #### Storing values and metrics per set: train/valid/test for each epoch/iteration. For example, the top1 value of the train and valid sets: 
 ```python
-checkpoint_handler.store_var_with_header(header='train', var_name='top1', iteration=0, value=80)
-checkpoint_handler.store_var_with_header(header='train', var_name='top1', iteration=1, value=85)
-checkpoint_handler.store_var_with_header(header='train', var_name='top1', iteration=2, value=90)
-checkpoint_handler.store_var_with_header(header='train', var_name='top1', iteration=3, value=91)
+checkpoint_handler.store_running_var_with_header(header='train', var_name='top1', iteration=0, value=80)
+checkpoint_handler.store_running_var_with_header(header='train', var_name='top1', iteration=1, value=85)
+checkpoint_handler.store_running_var_with_header(header='train', var_name='top1', iteration=2, value=90)
+checkpoint_handler.store_running_var_with_header(header='train', var_name='top1', iteration=3, value=91)
 
-checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=0, value=70)
-checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=1, value=75)
-checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=2, value=80)
-checkpoint_handler.store_var_with_header(header='valid', var_name='top1', iteration=3, value=85)
+checkpoint_handler.store_running_var_with_header(header='valid', var_name='top1', iteration=0, value=70)
+checkpoint_handler.store_running_var_with_header(header='valid', var_name='top1', iteration=1, value=75)
+checkpoint_handler.store_running_var_with_header(header='valid', var_name='top1', iteration=2, value=80)
+checkpoint_handler.store_running_var_with_header(header='valid', var_name='top1', iteration=3, value=85)
 ```
 
-#### Reading stored values per set: train/valid/test
+#### Reading stored values per set: train/valid/test for epoch/iteration
 ```python
-loss = checkpoint_handler.get_var_with_header(header='train', var_name='loss', iteration=0)
+loss = checkpoint_handler.get_running_var_with_header(header='train', var_name='loss', iteration=0)
 ```
 
 #### Save checkpoint:
 ```python
 import torchvision.models as models
 from torch import optim
-checkpoint_handler.store_var(var_name='loss', iteration=0, value=1.0)
+checkpoint_handler.store_running_var(var_name='loss', iteration=0, value=1.0)
 model = models.resnet18()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 path2save = '/tmp'
