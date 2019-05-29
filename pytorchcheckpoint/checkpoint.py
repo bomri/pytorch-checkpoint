@@ -66,6 +66,6 @@ class CheckpointHandler:
         torch.save(self, checkpoint_path)
 
     @staticmethod
-    def load_checkpoint(checkpoint_path):
-        checkpoint = torch.load(checkpoint_path)
+    def load_checkpoint(checkpoint_path, map_location='cpu'):
+        checkpoint = torch.load(checkpoint_path, map_location=map_location)
         return checkpoint
