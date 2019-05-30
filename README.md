@@ -74,9 +74,10 @@ from torch import optim
 checkpoint_handler.store_running_var(var_name='loss', iteration=0, value=1.0)
 model = models.resnet18()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+checkpoint_handler.optimizer = optimizer
 path2save = '/tmp'
 checkpoint_path = checkpoint_handler.generate_checkpoint_path(path2save=path2save)
-checkpoint_handler.save_checkpoint(checkpoint_path=checkpoint_path, iteration=25, model=model, optimizer=optimizer)
+checkpoint_handler.save_checkpoint(checkpoint_path=checkpoint_path, iteration=25, model=model)
 ```
 
 #### Load checkpoint:
