@@ -72,7 +72,12 @@ class CheckpointHandler:
         return checkpoint_path
 
     def save_checkpoint(self, checkpoint_path, iteration, model, optimizer):
-        self.model_state_dict = model.state_dict()
+        if type(model) == torch.nn.DataParallel:
+            # converting a DataParallel model to be able load later without DataParallel
+            self.model_state_dict = model.module.state_dict()
+        else:
+            self.model_state_dict = model.state_dict()
+
         self.optimizer_state_dict = optimizer.state_dict()
         self.iteration = iteration
 
