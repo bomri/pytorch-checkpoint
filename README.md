@@ -9,6 +9,7 @@ A model is saved not only with its weights, as one might do for later inference,
 
 In addition, it allows saving metrics and other values generated while training, such as accuracy and loss values. This makes it possible to recreate the learning curves from past values and continue to update them as training proceed.
 
+See accompanying blog post here: [Where did I put my loss values?](https://medium.com/p/where-did-i-put-my-loss-values-acf6264ea347?source=email-486b68bc632a--writer.postDistributed&sk=39b0e303a259edd240b0068e41351c34)
 
 ------------------
 
